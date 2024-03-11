@@ -42,11 +42,11 @@
 
 \newcommand{\enterProblemHeader}[1]{
     \nobreak\extramarks{}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
-    \nobreak\extramarks{Question \arabic{#1} (continued)}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Question \arabic{#1}}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
 }
 
 \newcommand{\exitProblemHeader}[1]{
-    \nobreak\extramarks{Question \arabic{#1} (continued)}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Question \arabic{#1}}{Question \arabic{#1} continued on next page\ldots}\nobreak{}
     \stepcounter{#1}
     \nobreak\extramarks{Question \arabic{#1}}{}\nobreak{}
 }
@@ -55,7 +55,7 @@
 \newcounter{partCounter}
 \newcounter{homeworkProblemCounter}
 \setcounter{homeworkProblemCounter}{1}
-\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+\nobreak\extramarks{Question \arabic{homeworkProblemCounter}}{}\nobreak{}
 
 %
 % Homework Problem Environment
@@ -164,155 +164,13 @@
     
     \pagebreak
 
-    \textbf{Solution}
+    \part
 
-    We solve each solution algebraically to determine a possible constant
-    \(c\).
+    Write down the OLS regression specification that the Ministry’s staff could use to implement their analysis described above. Interpret what the intercept and slope coefficients would capture in such a specification.
     \\
+    
+    \solution
 
-    \textbf{Part One}
-
-    \[
-        \begin{split}
-            n^2 + n + 1 &=
-            \\
-            &\leq n^2 + n^2 + n^2
-            \\
-            &= 3n^2
-            \\
-            &\leq c \cdot 2n^3
-        \end{split}
-    \]
-
-    Thus a valid \(c\) could be when \(c = 2\).
-    \\
-
-    \textbf{Part Two}
-
-    \[
-        \begin{split}
-            n^2 + n\sqrt{n} &=
-            \\
-            &= n^2 + n^{3/2}
-            \\
-            &\leq n^2 + n^{4/2}
-            \\
-            &= n^2 + n^2
-            \\
-            &= 2n^2
-            \\
-            &\leq c \cdot n^2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-    \\
-
-    \textbf{Part Three}
-
-    \[
-        \begin{split}
-            n^2 - n + 1 &=
-            \\
-            &\leq n^2
-            \\
-            &\leq c \cdot n^2/2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Let \(\Sigma = \{0, 1\}\). Construct a DFA \(A\) that recognizes the
-    language that consists of all binary numbers that can be divided by 5.
-    \\
-
-    Let the state \(q_k\) indicate the remainder of \(k\) divided by 5. For
-    example, the remainder of 2 would correlate to state \(q_2\) because \(7
-    \mod 5 = 2\).
-
-    \begin{figure}[h]
-        \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-            \node[state, accepting, initial] (q_0)   {$q_0$};
-            \node[state] (q_1) [right=of q_0] {$q_1$};
-            \node[state] (q_2) [right=of q_1] {$q_2$};
-            \node[state] (q_3) [right=of q_2] {$q_3$};
-            \node[state] (q_4) [right=of q_3] {$q_4$};
-            \path[->]
-                (q_0)
-                    edge [loop above] node {0} (q_0)
-                    edge node {1} (q_1)
-                (q_1)
-                    edge node {0} (q_2)
-                    edge [bend right=-30] node {1} (q_3)
-                (q_2)
-                    edge [bend left] node {1} (q_0)
-                    edge [bend right=-30] node {0} (q_4)
-                (q_3)
-                    edge node {1} (q_2)
-                    edge [bend left] node {0} (q_1)
-                (q_4)
-                    edge node {0} (q_3)
-                    edge [loop below] node {1} (q_4);
-        \end{tikzpicture}
-        \caption{DFA, \(A\), this is really beautiful, ya know?}
-        \label{fig:multiple5}
-    \end{figure}
-
-    \textbf{Justification}
-    \\
-
-    Take a given binary number, \(x\). Since there are only two inputs to our
-    state machine, \(x\) can either become \(x0\) or \(x1\). When a 0 comes
-    into the state machine, it is the same as taking the binary number and
-    multiplying it by two. When a 1 comes into the machine, it is the same as
-    multipying by two and adding one.
-    \\
-
-    Using this knowledge, we can construct a transition table that tell us
-    where to go:
-
-    \begin{table}[ht]
-        \centering
-        \begin{tabular}{c || c | c | c | c | c}
-            & \(x \mod 5 = 0\)
-            & \(x \mod 5 = 1\)
-            & \(x \mod 5 = 2\)
-            & \(x \mod 5 = 3\)
-            & \(x \mod 5 = 4\)
-            \\
-            \hline
-            \(x0\) & 0 & 2 & 4 & 1 & 3 \\
-            \(x1\) & 1 & 3 & 0 & 2 & 4 \\
-        \end{tabular}
-    \end{table}
-
-    Therefore on state \(q_0\) or (\(x \mod 5 = 0\)), a transition line should
-    go to state \(q_0\) for the input 0 and a line should go to state \(q_1\)
-    for input 1. Continuing this gives us the Figure~\ref{fig:multiple5}.
-\end{homeworkProblem}
-
-\begin{homeworkProblem}
-    Write part of \alg{Quick-Sort($list, start, end$)}
-
-    \begin{algorithm}[]
-        \begin{algorithmic}[1]
-            \Function{Quick-Sort}{$list, start, end$}
-                \If{$start \geq end$}
-                    \State{} \Return{}
-                \EndIf{}
-                \State{} $mid \gets \Call{Partition}{list, start, end}$
-                \State{} \Call{Quick-Sort}{$list, start, mid - 1$}
-                \State{} \Call{Quick-Sort}{$list, mid + 1, end$}
-            \EndFunction{}
-        \end{algorithmic}
-        \caption{Start of QuickSort}
-    \end{algorithm}
 \end{homeworkProblem}
 
 \pagebreak
