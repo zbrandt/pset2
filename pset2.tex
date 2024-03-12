@@ -8,6 +8,7 @@
 \usepackage{tikz}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
+\usepackage{enumitem}
 
 \usetikzlibrary{automata,positioning}
 
@@ -169,7 +170,24 @@
     Write down the OLS regression specification that the Ministry’s staff could use to implement their analysis described above. Interpret what the intercept and slope coefficients would capture in such a specification.
     \\
     
-    \solution
+    \solution  
+
+    The following OLS regression specification is one that the Ministry could implement:
+
+    \[ 
+        ln(Y_i) = \beta_0 + \beta_1 D_i + u_i 
+    \]
+    
+    where
+        \begin{itemize}[label={}, itemsep=0pt]
+            \item the subscript $i$ runs over the observations, $i = 1,\dots,n$;
+            \item $Y_i$ is the \textit{dependent variable}, annual firm sales 
+            \item $D_i$ is the \textit{dummy variable}, $D_i=1$ if the firm is a local Chamber of Commerce member and $0$ otherwise 
+            \item $\beta_0$ is the \textit{intercept} of the regression, the population mean value of annual, non-member firm sales 
+            \item $\beta_1$ is the coefficient on $D_i$, associating a change in $D_i$ by one unit with a $100\beta_1\%$ change in $Y_i$
+            \item $\beta_0 + \beta_1$ is the population mean value of annual, member firm sales
+            \item $u_i$ is the \textit{error} term
+        \end{itemize}
 
 \end{homeworkProblem}
 
