@@ -189,6 +189,94 @@
             \item $u_i$ is the \textit{error} term, all the factors responsiblze for the difference between predicted and observed values
         \end{itemize}
 
+    \pagebreak
+
+
+    \part
+    
+    Using notation from the Potential Outcomes Framework, briefly explain the concept of the Average Treatment Effect (ATE) to the Minister, and how what they plan to estimate in A) relates to this definition.
+    \\
+
+    \solution
+    
+    One core challenge with evaluating the causal effect of membership in a local Chamber of Commerce on firm revenues and profits is that we cannot observe a firm $i$ in two different states of the world: one where the firm is a member, and one where it is not. Instead, we can compare the mean outcomes of two firm groups (members vs. non-members) to learn about the true, average treatment effect (ATE) of membership.  \\
+    \\
+    The ATE is defined as:
+    \[
+        ATE = E(Y_i(1) - Y_i(0))
+    \]
+    where $Y_i(1)$ represents the potential outcome (the annual sales) of a firm $i$ if part of a local Chamber of Commerce and $Y_i(0)$ represents the annual sales for the \textbf{same} firm if not. \\
+    \\
+    To compare the mean outcomes of the two groups of firms (members vs. non-members of a local Chamber of Commerce), we instead estimate:
+    \[
+        E(Y_i(1) \:|\: X_i = 1) - E(Y_i(0) \:|\: X_i = 0)  
+    \]
+    where we condition our observation of $Y_i$ on $X_i$, with $X_i = 1$ representing if firm $i$ is part of a local Chamber of Commerce, and $X_i = 0$ if it is not. The above is not necessarily equal to the ATE defined earlier because $X_i$, or membership status, is \textit{not independent} of potential outcomes (annual firm sales). We would have to show first that, in the absence of a local Chamber of Commerce, member and non-member firms would have to be on average identical (there would have to be no selection bias).\\
+    \\
+    Unpacking the above expression we can see the effect of selection bias:
+    \[
+        \begin{split}
+            E(Y_i(1) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 1) &= \underbrace{E(Y_i(1) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 1)}_\text{Average Treatment Effect on the Treated}
+            \\
+            &+ \underbrace{E(Y_i(0) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 0)}_\text{Selection Bias} 
+        \end{split}
+    \]
+    The first term is the average treatment effect on the treated (ATT), the difference between $Y_i(1)$ and $Y_i(0)$ for the group of firms that are members of a local Chamber of Commerce. 
+    The second term estimates the selection bias by comparing $Y_i(0)$, annual sales before being a member, between members, $X_i = 1$, and non-members, $X_i = 0$. $E(Y_i(0) \:|\: X_i = 1)$ cannot be observed directly for both of these terms, because we cannot rerun the experiment a second time where the treatment is not applied.
+    The bias term appears because firms that are members of a local Chamber of Commerce may have different outcomes than firms that are not members, \textit{even in the absence of a local Chamber of Commerce}.
+    \pagebreak
+
+
+    \part 
+    
+    Referring to the expressions you use in your answer to B), explain why a randomized control trial (RCT) could be useful, and very briefly describe the basics of the RCT design for how the Ministry could set this up.
+    \\
+
+    \solution
+
+    In a RCT, treatment and control groups are randomly selected, and the average outcomes of these two groups are compared after the treatment. By randomly allocating treatment status, we can use the simple difference in outcomes between treatment and control groups to estimate the ATE. This is because the randomization removes selection bias by ensuring that member firms and non-member firms are comparable in terms of both observable and unobservable characteristics and that any difference between the two groups is not due to systematic differences. This implies that the ATE = ATT. \\
+    \\
+    Connecting back to the potential outcomes framework, $D_i = 1$ indicates if firm $i$ is a member of a local Chamber of Commerce (the treatment), and $D_i = 0$ if the firm is not ($D_i$ indicates treatment status). $Y_i(1)$ are the annual sales (the potential outcome) for a firm $i$ if treated (part of a local Chamber or Commerce), and $Y_i(0)$ are the annual sales for the same firm if not. \\
+    \\
+    The ATE is then defined as:
+    \[
+        \begin{split}
+            ATE &= E(Y_i(1) - Y_i(0))
+        \end{split}
+    \]
+    
+    If the treatment assignment $D_i$ is assigned randomly and independent of the potential outcomes of the firms ($D_i\perp (Y_i(1), Y_i(0))$), we can compare the mean outcomes of the two groups (members vs. non-members of a local Chamber of Commerce):
+    \[
+        \begin{split}
+            E(Y_i(1) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 1) &= \underbrace{E(Y_i(1) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 1)}_\text{Average Treatment Effect on the Treated}
+            \\
+            &+ \underbrace{E(Y_i(0) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 0)}_\text{Selection Bias} 
+            \\
+            &= E(Y_i(1) \:|\: D_i = 1) - E(Y_i(0) \:|\: D_i = 1) \: \: \: \text{(selection bias is zero)}
+            \\
+            &= ATT
+        \end{split}
+    \]
+    because the treatment status is independent of outcomes, we can also show: 
+    \[
+        \begin{split}
+            ATT &= E(Y_i(1) - Y_i(0)) = ATE
+        \end{split}
+    \]
+
+
+    This means that if we randomly assign treatment status (membership in a local Chamber of Commerce) and control status (non-membership), we can estimate the ATE by comparing mean sales outcomes across the two groups of observation. We can report the estimated treatment effect of the RCT design from the OLS regression, $ln(Y_i) = \beta_0 + \beta_1 D_i + u_i$. The $\beta_1$ coefficient is the difference in means between the treatment group relative to the control group. Dividing this difference by its standard error produces a $t$-statistic that allows us to determine whether the observed difference in annual sales between firms part of a local Chamber of Commerce and firms that are not is statistically significant.   
+    \pagebreak
+
+    \part 
+    
+    The Ministry mentions that it has no legal authority to force firms to become members in their local Chambers of Commerce. Using notation from the Potential Outcomes Framework, explain why this information could be important for the interpretation of the results from the RCT relative to the ATE, and how the Ministry should address this concern in the RCT analysis?
+    \\
+
+    \solution
+
+    In the case where assigned treatment status, $D_i$, cannot be enforced on firms,  
+
 \end{homeworkProblem}
 
 \pagebreak
