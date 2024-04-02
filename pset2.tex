@@ -275,7 +275,46 @@
 
     \solution
 
-    In the case where assigned treatment status, $D_i$, cannot be enforced on firms,  
+    In the case where assigned treatment status, $D_i$, cannot be enforced on firms, $T_i$ represents the effective treatment status of a firm $i$. Some firms may not comply with their assigned treatment status: firms assigned to become members of a local Chamber of Commerce may opt not to, and firms assigned to be non-members might become members. However, firms' choices to deviate from their assigned treatment are not random, and $T_i$ may be correlated with annual sales (potential outcomes). $T_i\perp (Y_i(0), Y_i(1))$ is no longer true, which means the difference between the mean outcomes of the control and treatment groups may be influenced by selection bias. \\
+    \\
+    However, the initial assignment status, $D_i$, is still randomly assigned and may have strong predictive power on actual treatment status, $T_i$. So, to address our original concern, we can use $D_i$ as an instrumental variable for $T_i$ to estimate the causal effect. To be a valid instrumental variable, $D_i$ must satisfy three conditions: instrument relevance, instrument exogeneity, and the instrument exclusion restriction. \\
+    \\
+    \textit{Instrument relevance.} The instrument needs to be related strongly enough with the endogenous, explantory variables of interest $T_i$. So, as long as the assignment protocol is partially followed, then the actual treatment status will be partially determined by the assigned treatment status, making $D_i$ a relevant instrumental variable. \\
+    \\
+    \textit{Instrument exogenity.} The instrument must be uncorrelated with any observed variables that also affect $Y_i$ in the error term. That is, $Cor(D_i, u_i) = 0$. Since initial treatment assignment is random, then $D_i$ is distributed independently of $u_i$, so the instrument is exogenous. \\
+    \\
+    \textit{Instrument exclusion restriction.} The instrument must not have a direct effect on $Y_i$ except through its relationship with $T_i$. That is, conditional on $T_i$, $D_i$ has no effect on $Y_i$. Again, since the initial treatment assignment is random, $D_i$ is distributed independenty of any other variable than $T_i$ that can have an effect on $Y_i$, satisfying the exclusion restriction. \\
+    \\
+    Therefore, the original random treatment assignment is a valid instrumental variable, and the following is the two-stage least squares regression:
+    \[
+        \begin{split}
+            T_i &= \beta_0' + \beta_1'D_i + u_i' \: \: \: \text{(first stage)}
+            \\
+            ln(Y_i) &= \beta_0 + \beta_1 \hat{T_i} + u_i \: \: \: \: \text{(second stage)}
+            \\
+            ln(Y_i) &= \beta_0'' + \beta_1''D_i+u_i'' \: \text{(reduced form)}
+        \end{split}
+    \]
+
+    In contrast to our original regression, our point estimate from the second stage is: , which gives us a weighted average of the treatment effect $\beta_{1i}$, where the weights increase with the degree to which the instrument $D_i$ influences $T_i$ in the first stage. 
+    \[
+        \begin{split}
+            \hat{\beta_{IV}} = \frac{\beta_1''}{\beta_1'} = \frac{E(Y_i | D_i = 1 - Y_i | D_i = 0)}{E(T_i | D_i = 1 - T_i | D_i = 0)} = \frac{\text{Difference in mean outcomes between groups}}{\text{Difference in fraction treated between groups}}
+        \end{split}  
+    \]
+    
+    \pagebreak
+
+    \part
+
+    The Ministry talked to other economists, and now it is worried about spillover effects on the control group. The staff don’t fully understand what the concern is, however. Briefly explain to them the intuition behind this concern, and explain how they could potentially address it when designing the RCT.
+    \\
+
+    \solution
+
+    The concern behind spillover effects is that, even if we were to isolate the treatment (membership in a local Chamber of Commerce) to firms only in the treatment group and restrict membership for those in the control group, we still have to worry about the effects that the treatment has on the control group. For example, in the case where membership in a local Chamber of Commerce improves firm sales for members, increased sales may contribute to overall economic surplus and increas sales for firms in the control group. This means that the control group is no longer a reference in which nothing has changed. \\
+    \\
+    One solution would be to  
 
 \end{homeworkProblem}
 
