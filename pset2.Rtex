@@ -1,54 +1,4 @@
-\documentclass{article}\usepackage[]{graphicx}\usepackage[]{xcolor}
-% maxwidth is the original width if it is less than linewidth
-% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-\let\hlipl\hlkwb
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
+\documentclass{article}
 
 \usepackage{fancyhdr}
 \usepackage{extramarks}
@@ -199,7 +149,7 @@
 \newcommand{\Var}{\mathrm{Var}}
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\Bias}{\mathrm{Bias}}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
 \begin{document}
 
 \maketitle
@@ -475,23 +425,6 @@
       \end{tabular} 
     \end{table}
     
-    The following OLS regression specification was applied to produce the results above:
-
-    \[ 
-        \widehat{ln(inc\_m_i)} = \widehat{\beta_0} + \widehat{\beta_1} \times educ\_years_i 
-    \]
-    
-    where
-        \begin{itemize}[label={}, itemsep=0pt]
-            % \item the subscript $i$ runs over the Mexican municipalities, $i = 1,\dots,n$;
-            % \item $Y_i$ is the \textit{dependent variable}, annual firm sales 
-            % \item $D_i$ is the \textit{dummy variable}, $D_i=1$ if the firm is a local Chamber of Commerce member and $0$ otherwise 
-            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the logarithm of local average monthly household incomes is 6.485 when average years of education is 0. This result is statistically significant at the 0.01 level.
-            \item $\widehat{\beta_1}$ is the coefficient on $educ\_years_i$, associating a one year increase in the average years of education with an 18.3\% increase in local average monthly household incomes. This result is statistically significant at the 0.01 level.
-            \item The $R^{2}$ is 0.4, meaning 44\% of the variation in the logarith of local average monthly incomes can be explained by this model.
-            % \item $u_i$ is the \textit{error} term, all the factors responsiblze for the difference between predicted and observed values
-        \end{itemize}
-    
     \pagebreak
 
     \part 
@@ -511,14 +444,6 @@
     \\
 
     \solution 
-    
-    There are three assumptions that need to be true for a variable to be a valid instrument:
-
-    \begin{enumerate}
-        \item \textbf{Instrument relevance}: The potential instrument needs to be related strongly enough with the endogenous, explanatory variable. 
-        \item \textbf{Instrument exogeneity}: The instrument must not be correlated with any other unobserved variables (in the error term) that affect the dependent variable. That is, $Cor(ln(dist\_us\_km), u) = 0$.
-        \item \textbf{Instrument exclusion restriction}: The instrument must not have a direct effect on the dependent variable except throught its influence on the endogenous explanatory variable. That is, conditioning for $educ\_years$, $ln(dist\_us\_km)$ has no effect on $ln(inc\_m)$, so again $Cor(ln(dist\_us\_km), u) = 0$. 
-    \end{enumerate}
 
     \pagebreak
 
@@ -559,20 +484,7 @@
       \hline \\[-1.8ex] 
       \textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
       \end{tabular} 
-    \end{table} 
-
-    The following first-stage regression specification was applied to produce the results for (2) above:
-
-    \[ 
-        \widehat{educ\_years_i} = \widehat{\beta_0} + \widehat{\beta_1} \times ln(dist\_us\_km_i) 
-    \]
-    
-    where
-        \begin{itemize}[label={}, itemsep=0pt]
-            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the average years of education is 9.738 when the distance to the US border is 0. This result is statistically significant at the 0.01 level.
-            \item $\widehat{\beta_1}$ is the coefficient on $ln(dist\_us\_km)$, associating a one percent increase in the distance to the US border with 0.004 decrease in the average years of education. This result is statistically significant at the 0.01 level.
-            \item The $F$-stat is 67.597, a result statistically significant at the 0.01 level and above 10, meaning $log(dist\_us\_km)$ is related strongly enough with $educ\_years$ to pass the instrument relevance test.
-        \end{itemize}
+      \end{table} 
 
     \pagebreak
 
@@ -616,19 +528,6 @@
       \textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
       \end{tabular} 
     \end{table} 
-
-    The following second-stage regression specification was applied to produce the results for (3) above:
-
-    \[ 
-        \widehat{educ\_years_i} = \widehat{\beta_0} + \widehat{\beta_1} \times ln(dist\_us\_km_i) 
-    \]
-    
-    where
-        \begin{itemize}[label={}, itemsep=0pt]
-            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the average years of education is 9.738 when the distance to the US border is 0. This result is statistically significant at the 0.01 level.
-            \item $\widehat{\beta_1}$ is the coefficient on $ln(dist\_us\_km)$, associating a one percent increase in the distance to the US border with 0.004 decrease in the average years of education. This result is statistically significant at the 0.01 level.
-            \item The $F$-stat is 67.597, a result statistically significant at the 0.01 level and above 10, meaning $log(dist\_us\_km)$ is related strongly enough with $educ\_years$ to pass the instrument relevance test.
-        \end{itemize}
 
     \pagebreak
 
@@ -689,141 +588,90 @@
 
 \pagebreak
 
+% \begin{homeworkProblem}
+%     Prove a polynomial of degree \(k\), \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots
+%     + a_1n^1 + a_0n^0\) is a member of \(\Theta(n^k)\) where \(a_k \hdots a_0\)
+%     are nonnegative constants.
+
+%     \begin{proof}
+%         To prove that \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 +
+%         a_0n^0\), we must show the following:
+
+%         \[
+%             \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
+%             f(n) \leq c_2 \cdot g(n)}
+%         \]
+
+%         For the first inequality, it is easy to see that it holds because no
+%         matter what the constants are, \(n^k \leq a_kn^k + a_{k - 1}n^{k - 1} +
+%         \hdots + a_1n^1 + a_0n^0\) even if \(c_1 = 1\) and \(n_0 = 1\).  This
+%         is because \(n^k \leq c_1 \cdot a_kn^k\) for any nonnegative constant,
+%         \(c_1\) and \(a_k\).
+%         \\
+
+%         Taking the second inequality, we prove it in the following way.
+%         By summation, \(\sum\limits_{i=0}^k a_i\) will give us a new constant,
+%         \(A\). By taking this value of \(A\), we can then do the following:
+
+%         \[
+%             \begin{split}
+%                 a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 + a_0n^0 &=
+%                 \\
+%                 &\leq (a_k + a_{k - 1} \hdots a_1 + a_0) \cdot n^k
+%                 \\
+%                 &= A \cdot n^k
+%                 \\
+%                 &\leq c_2 \cdot n^k
+%             \end{split}
+%         \]
+
+%         where \(n_0 = 1\) and \(c_2 = A\). \(c_2\) is just a constant. Thus the
+%         proof is complete.
+%     \end{proof}
+% \end{homeworkProblem}
+
+\pagebreak
+
+%
+% Non sequential homework problems
+%
+
+% Jump to problem 18
 \section*{Code}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-    \hlcom{#install.packages(c("dplyr", "stargazer", "knitr", "ivreg"))}
-    \hlkwd{library}\hlstd{(dplyr)}
-    \hlkwd{library}\hlstd{(stargazer)}
-    \hlkwd{library}\hlstd{(knitr)}
-    \hlkwd{library}\hlstd{(ivreg)}
+    <<echo=TRUE, cache=TRUE>>=
+        #install.packages(c("dplyr", "stargazer", "knitr", "ivreg"))
+        library(dplyr)
+        library(stargazer)
+        library(knitr)
+        library(ivreg)
 
-    \hlkwd{setwd}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"/home/zachary/Desktop/ECON 140/Problem Set 2/code"}\hlstd{,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{))}
-    \hlstd{mexico} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"Mexico_PS2.csv"}\hlstd{)}
+        setwd(paste("/home/zachary/Desktop/ECON 140/Problem Set 2/code", sep=""))
+        mexico <- read.csv("Mexico_PS2.csv")
 
-    \hlcom{# part a}
-    \hlkwd{stargazer}\hlstd{(mexico,} \hlkwc{type} \hlstd{=} \hlstr{"text"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## 
-## ===========================================================
-## Statistic     N      Mean     St. Dev.     Min      Max    
-## -----------------------------------------------------------
-## year        1,153 2,000.000     0.000     2,000    2,000   
-## municode    1,153 18,168.720  8,045.480   1,001    32,056  
-## inc_m       1,153 2,583.081   1,257.101  299.757 14,792.910
-## ind_lang    1,153   0.114       0.221     0.000    0.984   
-## educ_years  1,153   7.031       1.354     2.488    11.870  
-## sales_hotel 1,153 27,120.140 201,033.400    1    5,229,616 
-## logtemp     1,153   5.283       0.212     4.658    5.671   
-## logprecip   1,153   4.304       0.562     1.790    5.746   
-## dist_us_km  1,153  696.171     278.301    6.609  1,348.003 
-## -----------------------------------------------------------
-\end{verbatim}
-\begin{alltt}
-    \hlcom{# part b}
-    \hlstd{ols} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(inc_m)} \hlopt{~} \hlstd{educ_years, mexico)}
-    \hlkwd{stargazer}\hlstd{(ols,} \hlkwc{type} \hlstd{=} \hlstr{"text"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## 
-## ===============================================
-##                         Dependent variable:    
-##                     ---------------------------
-##                             log(inc_m)         
-## -----------------------------------------------
-## educ_years                   0.183***          
-##                               (0.007)          
-##                                                
-## Constant                     6.485***          
-##                               (0.047)          
-##                                                
-## -----------------------------------------------
-## Observations                   1,153           
-## R2                             0.400           
-## Adjusted R2                    0.399           
-## Residual Std. Error      0.304 (df = 1151)     
-## F Statistic          767.224*** (df = 1; 1151) 
-## ===============================================
-## Note:               *p<0.1; **p<0.05; ***p<0.01
-\end{verbatim}
-\begin{alltt}
-    \hlcom{# part e}
-    \hlstd{first_stage} \hlkwb{<-} \hlkwd{lm}\hlstd{(educ_years} \hlopt{~} \hlkwd{log}\hlstd{(dist_us_km), mexico)}
-    \hlkwd{stargazer}\hlstd{(ols, first_stage,} \hlkwc{type} \hlstd{=} \hlstr{"text"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## 
-## ============================================================
-##                                     Dependent variable:     
-##                                 ----------------------------
-##                                   log(inc_m)    educ_years  
-##                                      (1)            (2)     
-## ------------------------------------------------------------
-## educ_years                         0.183***                 
-##                                    (0.007)                  
-##                                                             
-## log(dist_us_km)                                  -0.424***  
-##                                                   (0.052)   
-##                                                             
-## Constant                           6.485***      9.738***   
-##                                    (0.047)        (0.332)   
-##                                                             
-## ------------------------------------------------------------
-## Observations                        1,153          1,153    
-## R2                                  0.400          0.055    
-## Adjusted R2                         0.399          0.055    
-## Residual Std. Error (df = 1151)     0.304          1.317    
-## F Statistic (df = 1; 1151)        767.224***     67.597***  
-## ============================================================
-## Note:                            *p<0.1; **p<0.05; ***p<0.01
-\end{verbatim}
-\begin{alltt}
-    \hlcom{# part f}
-    \hlstd{second_stage} \hlkwb{<-} \hlkwd{ivreg}\hlstd{(}\hlkwd{log}\hlstd{(inc_m)} \hlopt{~} \hlstd{educ_years} \hlopt{|} \hlkwd{log}\hlstd{(dist_us_km),} \hlkwc{data} \hlstd{= mexico)}
-    \hlkwd{stargazer}\hlstd{(ols, first_stage, second_stage,} \hlkwc{type} \hlstd{=} \hlstr{"text"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## 
-## ==================================================================
-##                                        Dependent variable:        
-##                                 ----------------------------------
-##                                 log(inc_m) educ_years  log(inc_m) 
-##                                    OLS        OLS     instrumental
-##                                                         variable  
-##                                    (1)        (2)         (3)     
-## ------------------------------------------------------------------
-## educ_years                       0.183***               0.453***  
-##                                  (0.007)                (0.044)   
-##                                                                   
-## log(dist_us_km)                            -0.424***              
-##                                             (0.052)               
-##                                                                   
-## Constant                         6.485***   9.738***    4.589***  
-##                                  (0.047)    (0.332)     (0.309)   
-##                                                                   
-## ------------------------------------------------------------------
-## Observations                      1,153      1,153       1,153    
-## R2                                0.400      0.055       -0.465   
-## Adjusted R2                       0.399      0.055       -0.466   
-## Residual Std. Error (df = 1151)   0.304      1.317       0.475    
-## F Statistic (df = 1; 1151)      767.224*** 67.597***              
-## ==================================================================
-## Note:                                  *p<0.1; **p<0.05; ***p<0.01
-\end{verbatim}
-\begin{alltt}
-    \hlcom{# part g}
+        # part a
+        stargazer(mexico, type = "text")
 
-    \hlstd{first_stage_controls} \hlkwb{<-} \hlkwd{lm}\hlstd{(educ_years} \hlopt{~} \hlkwd{log}\hlstd{(dist_us_km)} \hlopt{+} \hlkwd{log}\hlstd{(sales_hotel)} \hlopt{+}
-                                                \hlstd{logtemp} \hlopt{+} \hlstd{logprecip} \hlopt{+} \hlstd{ind_lang, mexico)}
-    \hlstd{reduced_form} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(inc_m)} \hlopt{~} \hlkwd{log}\hlstd{(dist_us_km), mexico)}
-    \hlstd{reduced_form_controls} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(inc_m)} \hlopt{~} \hlkwd{log}\hlstd{(dist_us_km)} \hlopt{+} \hlkwd{log}\hlstd{(sales_hotel)} \hlopt{+}
-                                                \hlstd{logtemp} \hlopt{+} \hlstd{logprecip} \hlopt{+} \hlstd{ind_lang, mexico)}
-    \hlcom{#stargazer(first_stage, first_stage_controls, reduced_form, }
-    \hlcom{#            reduced_form_controls, type = "text")}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+        # part b
+        ols <- lm(log(inc_m) ~ educ_years, mexico)
+        stargazer(ols, type = "text")
+
+        # part e
+        first_stage <- lm(educ_years ~ log(dist_us_km), mexico)
+        stargazer(ols, first_stage, type = "text")
+
+        # part f
+        second_stage <- ivreg(log(inc_m) ~ educ_years | log(dist_us_km), data = mexico)
+        stargazer(ols, first_stage, second_stage, type = "text")
+
+        # part g
+
+        first_stage_controls <- lm(educ_years ~ log(dist_us_km) + log(sales_hotel) + 
+                                                    logtemp + logprecip + ind_lang, mexico)
+        reduced_form <- lm(log(inc_m) ~ log(dist_us_km), mexico)
+        reduced_form_controls <- lm(log(inc_m) ~ log(dist_us_km) + log(sales_hotel) + 
+                                                    logtemp + logprecip + ind_lang, mexico)
+        #stargazer(first_stage, first_stage_controls, reduced_form, 
+        #            reduced_form_controls, type = "text")
+    @
 
 \end{document}
