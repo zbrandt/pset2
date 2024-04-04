@@ -59,6 +59,7 @@
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
 \usepackage{enumitem}
+\usepackage{tikz-cd}
 
 
 \usetikzlibrary{automata,positioning}
@@ -329,7 +330,9 @@
     \]
 
 
-    This means that if we randomly assign treatment status (membership in a local Chamber of Commerce) and control status (non-membership), we can estimate the ATE by comparing mean sales outcomes across the two groups of observation. We can report the estimated treatment effect of the RCT design from the OLS regression, $ln(Y_i) = \beta_0 + \beta_1 D_i + u_i$. The $\beta_1$ coefficient is the difference in means between the treatment group relative to the control group. Dividing this difference by its standard error produces a $t$-statistic that allows us to determine whether the observed difference in annual sales between firms part of a local Chamber of Commerce and firms that are not is statistically significant.   
+    This means that if we randomly assign treatment status (membership in a local Chamber of Commerce) and control status (non-membership), we can estimate the ATE by comparing mean sales outcomes across the two groups of observation. An experimenter would have to randomly select from a sample of firms which ones to assign to the control group and become or remain non-members of a local Chamber of Commerce and assign the others to remain or become members of a local Chamber of Commerce. After a certain period, the experimenter will conclude the experiment and record sales data and assignment status for each firm in the study.\\
+    
+    We can report the estimated treatment effect of the RCT design from the OLS regression, $ln(Y_i) = \beta_0 + \beta_1 D_i + u_i$. The $\beta_1$ coefficient is the difference in means between the treatment group relative to the control group. Dividing this difference by its standard error produces a $t$-statistic that allows us to determine whether the observed difference in annual sales between firms part of a local Chamber of Commerce and firms that are not is statistically significant.   
     \pagebreak
 
     \part 
@@ -690,18 +693,36 @@
       \end{tabular} 
     \end{table} 
 
-    The following first-stage and reduced-form regression specifications were applied to produce the results for (2), (3), and (4):
+    The model that produced results for (1) was already described in part E). The following first-stage and reduced-form regression specifications were applied to produce the results for (2), (3), and (4):
     
     \[ 
         \begin{split}
-            \widehat{educ\_years_i} &= \widehat{\beta_0} + \widehat{\beta_1} \times ln(dist\_us\_km_i)  \: \: \: \text{(2)}
+            \text{(2)} \: \:\widehat{educ\_years_i} &= \widehat{\alpha_0} + \widehat{\alpha_1} \; ln(dist\_us\_km_i) + \widehat{\alpha_2} \; ln(sales\_hotel_i) + \widehat{\alpha_3} \;logtemp_i + \widehat{\alpha_4}\; logprecip_i + \widehat{\alpha_5}\; ind\_lang_i
             \\
-            \widehat{educ\_years_i} &= \widehat{\beta_0} + \widehat{\beta_1} \times ln(dist\_us\_km_i)  \: \: \: \text{(3)}
+            \text{(3)} \: \: \: \: \widehat{ln(inc\_m_i)} &= \widehat{\beta_0} + \widehat{\beta_1} \; ln(dist\_us\_km_i)
             \\
-            \widehat{educ\_years_i} &= \widehat{\beta_0} + \widehat{\beta_1} \times ln(dist\_us\_km_i)  \: \: \: \text{(4)}
+            \text{(4)} \: \: \: \: \widehat{ln(inc\_m_i)} &= \widehat{\gamma_0} + \widehat{\gamma_1} \; ln(dist\_us\_km_i) + \widehat{\gamma_2} \; ln(sales\_hotel_i) + \widehat{\gamma_3} \;logtemp_i + \widehat{\gamma_4}\; logprecip_i + \widehat{\gamma_5}\; ind\_lang_i
         \end{split}
     \]
 
+    From the (2) first-stage regression of average years of education on the logarithm of distance to the US border alongside the additional control variables, the coefficent on $log(dist\_us\_km_i)$ is no longer statistically significant at either the 0.01, 0.05, or 0.1 levels in contrast to (1), the model without the control variables. This suggests that our instrumental variables strategy has a weak first stage, and our IV point estimate could be unreliable. This unreliability in our IV point estimate might be validated for a skeptic when computing $\widehat{\beta_{IV}}$ as a ratio between the controlled first-stage point estimate and the controlled reduced-form point estimate:
+
+    \[
+        \frac{\widehat{\gamma_1}}{\widehat{\alpha_1}} = \frac{-0.091}{-0.034} = 2.676
+    \]
+        \\
+    This is a relatively huge IV value and might be a symptom of having a weak instrument (it suggests that, conditioning for the other control variables, a one percent change in the distance to the US border corresponds to a 267.6\% change in local average monthly household incomes). \\
+
+    It's possible that our instrument also does not pass the instrument exclusion restriction. While the effect of the logarithm of distance to the US border might not be statistically significant, its effect on the logarithm of local average monthly household incomes is. In this case, our instrument does not have an affect on the dependent variable only through our endogenous explanatory variable but rather through other ways.
+    
+        \[
+            \begin{tikzcd}
+                Z \ar[r,"a"] \ar[rr,bend right,"c"'] & X \ar[r,"b"] & Y
+            \end{tikzcd} 
+        \] 
+    \\
+    For a potential instrumental variable to be a valid candidate, the effect it has on the dependent variable must only act through the explanatory one (through `a' and then `b' in the diagram above). If it impacts $Y$ through `c' for instance, it is not valid, and from our regression table above, this seems to be the case considering the point estimate is non-zero and statistically significant at the 0.01 level. However, we would need to include more instruments for the average years of education in our first-stage regression to perform an over-identification test to see if one of the instruments is exogenous and therefore invalid.
+    
     %   doesnt pass instrument exclusion restriction, affects income through other ways but not through education (statistically insignificant result for (2))
 
 
