@@ -512,6 +512,40 @@
     \\
 
     \solution 
+    
+    Below are three reasons why the point estimate $\widehat{\beta_1}$ from part B) may be biased relative to the true causal effect of education on incomes, $\beta_1$. \\
+    \\
+    \textbf{Omitted variable bias.} Below is the formula to identify the effects of omitted variable bias on our point estimate with $educ\_years$ as our variable of interest and $X$ as another variable currently in the error term: 
+
+    \[
+        \begin{split}
+            \underbrace{\widehat{\beta_1}}_\text{Our point estimate} &= \underbrace{\beta_1}_\text{the true causal effect} + \underbrace{\beta_2 \times \frac{Cov(educ\_years, X)}{Var(educ\_years)}}_\text{OVB bias}
+        \end{split}
+    \]
+    \\
+    Monthly household incomes could be impacted by a host of other factors that could be correlated with education, such as ability or age. Ability might have a direct effect on household incomes and might also be positively correlated with education, with more able people tending to invest more into education and driving up the average years of education. As such the covariance between education and age would be positive, leading to a positive bias. Age might have a similar effect, with older people tending to have more years in education. Age might have an effect on incomes too, with more senior workers having higher incomes. Again, the covariance between these two variables would be positive. By not including these factors, age and ability, as variables in our regression, there is more undue weight given to education, overestimating the true causal effect $\beta_1$.
+    \\
+
+    \textbf{Measurement error.} Below is the formula to identify the effects of measurement error on the explanator variable, $educ\_years$, on our point estimate:
+    
+    \[
+        \begin{split}
+            \underbrace{\widehat{\beta_1}}_\text{Our point estimate} &= \underbrace{\beta_1'}_\text{the true causal effect} - \underbrace{\beta_1' \times \frac{Var(e))}{Var(educ\_years)}}_\text{ME bias}
+        \end{split}
+    \]
+    \\
+     is ``noise'' in measurements of the explanator variable of average years of education, $educ_years$ will be correlated with the error term. The effect of measurement error on the explanatory variable is to exert negative bias on the point estimate when the true effect of average years of education on local average monthly household incomes is positive and vice versa. That is, the $bias > 0$ when $\beta_1' < 0$ and $bias < 0$ when $\beta_1' > 0$. This make sense if the ``noise'' is not biased in any particular direction (that is, average years of education are generally overreported as much as they are underreported). In our case then, with a positive point estimate, the measurement error bias is negative.
+    \\
+    \\
+    \textbf{Reverse causality bias.}
+    
+    \[
+        \begin{tikzcd}
+            educ\_years \arrow[r] & ln(inc\_m) \arrow[l]
+        \end{tikzcd} 
+    \] 
+
+    One reason that there might be reverse causality bias at play is because wealthier people (measured in terms of local average monthly household incomes) might already puruse more education than those who don't. Thus there may be a positive bias from our dependent variable now explaining some of the variation in the explanatory variable.
 
     \pagebreak
 
