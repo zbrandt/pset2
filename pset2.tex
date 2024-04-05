@@ -248,9 +248,9 @@
             \item the subscript $i$ runs over the observations, $i = 1,\dots,n$;
             \item $Y_i$ is the \textit{dependent variable}, annual firm sales 
             \item $D_i$ is the \textit{dummy variable}, $D_i=1$ if the firm is a local Chamber of Commerce member and $0$ otherwise 
-            \item $\beta_0$ is the \textit{intercept} of the regression, the population mean value of annual, non-member firm sales 
+            \item $\beta_0$ is the \textit{intercept} of the regression, the mean value of annual, non-member firm sales 
             \item $\beta_1$ is the coefficient on $D_i$, associating a change in $D_i$ by one unit with a $100 \times \beta_1\%$ change in $Y_i$
-            \item $\beta_0 + \beta_1$ is the population mean value of annual, member firm sales
+            \item $\beta_0 + \beta_1$ is the mean value of annual, member firm sales
             \item $u_i$ is the \textit{error} term, all the factors responsiblze for the difference between predicted and observed values
         \end{itemize}
 
@@ -547,7 +547,7 @@
         \end{tikzcd} 
     \] 
 
-    One reason that there might be reverse causality bias at play is because wealthier people (measured in terms of local average monthly household incomes) might already pursue more education than those who don't. Thus there may be a positive bias from our dependent variable now explaining some of the variation in the explanatory variable.
+    Reverse causality bias is when in a regression such as local average monthly household incomes on average years of education, there exists not only a causal effect between the explanatory variable and the dependent variable, but also between the dependent variable and the explanatory. This makes $educ\_years$ correlated with the error term in the population regression of the model applied in part B). One reason that there might be reverse causality bias at play is because wealthier people (measured in terms of local average monthly household incomes) might already pursue more education than those who don't. Thus there may be a positive bias from our dependent variable now explaining some of the variation in the explanatory variable.
 
     \pagebreak
 
@@ -759,7 +759,7 @@
             \end{tikzcd} 
         \] 
     \\
-    For a potential instrumental variable to be a valid candidate, the effect it has on the dependent variable must only act through the explanatory one (through `a' and then `b' in the diagram above). If it impacts $Y$ through `c' for instance, it is not valid as the explanatory variable is no longer exogenous. In regression (4) we can see how, in contrast to (2), the point estimate for the causal effect of $ln(dist\_us\_km)$ on $ln(inc\_m)$ is statistically significant at the 0.01 level. That is, our point estimate for $\gamma_1$ is statistically significant.
+    For a potential instrumental variable to be a valid candidate, the effect it has on the dependent variable must only act through the explanatory one (through `a' and then `b' in the diagram above). If it impacts $Y$ through `c' for instance, it is not valid as the explanatory variable is no longer exogenous. In regression (4) we can see how, in contrast to (2), the point estimate for the causal effect of $ln(dist\_us\_km)$ on $ln(inc\_m)$ is statistically significant at the 0.01 level. That is, our point estimate for $\gamma_1$ is statistically significant. This suggests that the distance to the US border does have a causal effect on local average monthly household incomes, but not through average years of education. 
     
     %   doesnt pass instrument exclusion restriction, affects income through other ways but not through education (statistically insignificant result for (2))
 
