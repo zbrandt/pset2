@@ -332,7 +332,7 @@
 
     This means that if we randomly assign treatment status (membership in a local Chamber of Commerce) and control status (non-membership), we can estimate the ATE by comparing mean sales outcomes across the two groups of observation. An experimenter would have to randomly select from a sample of firms which ones to assign to the control group and become or remain non-members of a local Chamber of Commerce and assign the others to remain or become members of a local Chamber of Commerce. After a certain period, the experimenter will conclude the experiment and record sales data and assignment status for each firm in the study.\\
     
-    We can report the estimated treatment effect of the RCT design from the OLS regression, $ln(Y_i) = \beta_0 + \beta_1 D_i + u_i$. The $\beta_1$ coefficient is the difference in means between the treatment group relative to the control group. Dividing this difference by its standard error produces a $t$-statistic that allows us to determine whether the observed difference in annual sales between firms part of a local Chamber of Commerce and firms that are not is statistically significant.   
+    We can report the estimated treatment effect of the RCT design from the OLS regression, $ln(Y_i) = \beta_0 + \beta_1 D_i + u_i$. The $\beta_1$ coefficient is the difference in means between the treatment group relative to the control group. Dividing this difference by its standard error produces a $t$-statistic that allows us to determine whether the observed difference in annual sales between firms part of a local Chamber of Commerce and firms that are not is statistically significant. 
     \pagebreak
 
     \part 
@@ -344,7 +344,7 @@
 
     In the case where assigned treatment status, $D_i$, cannot be enforced on firms, $T_i$ represents the effective treatment status of a firm $i$. Some firms may not comply with their assigned treatment status: firms assigned to become members of a local Chamber of Commerce may opt not to, and firms assigned to be non-members might become members. However, firms' choices to deviate from their assigned treatment are not random, and $T_i$ may be correlated with annual sales (potential outcomes). $T_i\perp (Y_i(0), Y_i(1))$ is no longer true, which means the difference between the mean outcomes of the control and treatment groups may be influenced by selection bias. \\
     \\
-    However, the initial assignment status, $D_i$, is still randomly assigned and may have strong predictive power on actual treatment status, $T_i$. So, to address our original concern, we can use $D_i$ as an instrumental variable for $T_i$ to estimate the causal effect. To be a valid instrumental variable, $D_i$ must satisfy three conditions: instrument relevance, instrument exogeneity, and the instrument exclusion restriction. \\
+    However, the initial assignment status, $D_i$, is still randomly assigned and may have strong predictive power on actual treatment status, $T_i$. So, to address our original concern, we can use $D_i$ as an instrumental variable for $T_i$ to estimate the causal effect. Using an instrumental variable will limit the variation in the effective treatment status, $T_i$, to only the part that can be predicted by the randomly assigned $D_i$. This will pick out only the exogneous variation of the independent variable $T_i$ to deal with concerns of bias in the case where there is only partial compliance. To be a valid instrumental variable, $D_i$ must satisfy three conditions: instrument relevance, instrument exogeneity, and the instrument exclusion restriction. \\
     \\
     \textit{Instrument relevance.} The instrument needs to be related strongly enough with the endogenous, explantory variables of interest $T_i$. So, as long as the assignment protocol is partially followed, then the actual treatment status will be partially determined by the assigned treatment status, making $D_i$ a relevant instrumental variable. \\
     \\
@@ -363,14 +363,16 @@
         \end{split}
     \]
 
-    In contrast to our original regression, our point estimate from the second stage is a weighted average of the treatment effect $\beta_{1i}$, where the weights increase with the degree to which the instrument $D_i$ influences $T_i$ in the first stage:
+    In contrast to our original regression, our point estimate from the second stage is a weighted average of the treatment effect $\beta_{1i}$, where the weights increase with the degree to which the instrument $D_i$ influences $T_i$ in the first stage. This is because the treatment effect from the instrumental variables regression gives greater weights to units that respond to the instrument in the first place:
     \[
         \begin{split}
             \widehat{\beta_{IV}} = \frac{\beta_1''}{\beta_1'} = \frac{E(Y_i | D_i = 1 - Y_i | D_i = 0)}{E(T_i | D_i = 1 - T_i | D_i = 0)} = \frac{\text{Intent-to-treat effect (ITT)}}{\text{Difference in fraction treated between groups}} = LATE
         \end{split}  
     \]
 
-    That is, instead of estimating the average treatment effect, or ATE, we instead estimate the local average treatment effect (LATE) after isolating the variation in $T_i$ to the group of compliers. This is because we don't know if the firms that complied are representative to the whole sample of firms chosen for the experiment and why the causal effect in the instrumental variable case is a local average. So, when we adjust for less than full compliance in our RCT by instrumenting the effect treatment status with assigned treatment status, our point estimate, $\widehat{\beta_{IV}}$, reflects a ratio between an ``intent-to-treat" effect (ITT), the difference in mean outcomes between members and non-members of a local Chamber of Commerce, and the proportion of compliers, producing the LATE. 
+    That is, instead of estimating the average treatment effect, or ATE, we instead estimate the local average treatment effect (LATE) after isolating the variation in $T_i$ to the group of compliers. This is because we don't know if the firms that complied are representative to the whole sample of firms chosen for the experiment and is why the causal effect in the instrumental variable case is a local average. So, when we adjust for less than full compliance in our RCT by instrumenting the effect treatment status with assigned treatment status, our point estimate, $\widehat{\beta_{IV}}$, reflects a ratio between an ``intent-to-treat" effect (ITT), the difference in mean outcomes between members and non-members of a local Chamber of Commerce, and the proportion of compliers, producing the LATE. \\
+    \\
+    The average treatment effect on the treat (ATT) is then the same thing as the LATE: the causal effect of being a member of a local Chamber of Commerce estimated on the group of firms that chose to take up the experiment when offered to them. This is different from the ATE because it was not randomized which firms will actually follow adhere to their assigned treatment status. It's instead an independent decision made by each firm. In a rational world, the ATT will usually demonstrate a stronger effect than the ATE because the firms that take up the treatment probably have more to gain.
     
     \pagebreak
 
@@ -496,8 +498,8 @@
             % \item the subscript $i$ runs over the Mexican municipalities, $i = 1,\dots,n$;
             % \item $Y_i$ is the \textit{dependent variable}, annual firm sales 
             % \item $D_i$ is the \textit{dummy variable}, $D_i=1$ if the firm is a local Chamber of Commerce member and $0$ otherwise 
-            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the logarithm of local average monthly household incomes is 6.485 when average years of education is 0. This result is statistically significant at the 0.01 level.
-            \item $\widehat{\beta_1}$ is the coefficient on $educ\_years_i$, associating a one year increase in the average years of education with an 18.3\% increase in local average monthly household incomes. This result is statistically significant at the 0.01 level.
+            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the logarithm of local average monthly household incomes is 6.485 when average years of education is 0. This result is statistically significant at the 0.01 level (*** corresponds to a p-val below the 1\% threshold). With a $t$-stat of $\frac{6.485}{0.047} = 137.979$ in magnitude, greater than the $t$-stat of 1.96 for a 5\% threshold to reject $H_0: \beta_0 = 0$, a confidence interval built with this standard error at the 5\% level does not contain zero.
+            \item $\widehat{\beta_1}$ is the coefficient on $educ\_years_i$, associating a one year increase in the average years of education with an 18.3\% increase in local average monthly household incomes. This result is statistically significant at the 0.01 level (*** corresponds to a p-val below the 1\% threshold). With a $t$-stat of $\frac{0.183}{0.007} = 26.143$ in magnitude, greater than the $t$-stat of 1.96 for a 5\% threshold to reject $H_0: \beta_1 = 0$, a confidence interval built with this standard error at the 5\% level does not contain zero.
             \item The $R^{2}$ is 0.4, meaning 44\% of the variation in the logarithm of local average monthly incomes can be explained by this model.
             % \item $u_i$ is the \textit{error} term, all the factors responsiblze for the difference between predicted and observed values
         \end{itemize}
@@ -545,7 +547,7 @@
         \end{tikzcd} 
     \] 
 
-    One reason that there might be reverse causality bias at play is because wealthier people (measured in terms of local average monthly household incomes) might already puruse more education than those who don't. Thus there may be a positive bias from our dependent variable now explaining some of the variation in the explanatory variable.
+    One reason that there might be reverse causality bias at play is because wealthier people (measured in terms of local average monthly household incomes) might already pursue more education than those who don't. Thus there may be a positive bias from our dependent variable now explaining some of the variation in the explanatory variable.
 
     \pagebreak
 
@@ -613,8 +615,8 @@
     
     where
         \begin{itemize}[label={}, itemsep=0pt]
-            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the average years of education is 9.738 when the distance to the US border is 0. This result is statistically significant at the 0.01 level.
-            \item $\widehat{\beta_1}$ is the coefficient on $ln(dist\_us\_km)$, associating a one percent increase in the distance to the US border with 0.004 decrease in the average years of education. This result is statistically significant at the 0.01 level.
+            \item $\widehat{\beta_0}$ is the \textit{intercept} of the regression. This sample mean value of the average years of education is 9.738 when the distance to the US border is 0. This result is statistically significant at the 0.01 level (*** corresponds to a p-val below the 1\% threshold). With a $t$-stat of $\frac{9.738}{0.332} = 29.331d$ in magnitude, greater than the $t$-stat of 1.96 for a 5\% threshold to reject $H_0: \beta_0 = 0$, a confidence interval built with this standard error at the 5\% level does not contain zero.
+            \item $\widehat{\beta_1}$ is the coefficient on $ln(dist\_us\_km)$, associating a one percent increase in the distance to the US border with 0.004 decrease in the average years of education. This result is statistically significant at the 0.01 level (*** corresponds to a p-val below the 1\% threshold). With a $t$-stat of $c{-0.424}{0.052} = -8.154$ in magnitude, greater than the $t$-stat of 1.96 for a 5\% threshold to reject $H_0: \beta_0 = 0$, a confidence interval built with this standard error at the 5\% level does not contain zero.
             \item The $F$-stat is 67.597, a result statistically significant at the 0.01 level and above 10, meaning $log(dist\_us\_km)$ is related strongly enough with $educ\_years$ to pass the instrument relevance test.
         \end{itemize}
 
@@ -739,13 +741,15 @@
         \end{split}
     \]
 
-    From the (2) first-stage regression of average years of education on the logarithm of distance to the US border alongside the additional control variables, the coefficent on $log(dist\_us\_km_i)$ is no longer statistically significant at either the 0.01, 0.05, or 0.1 levels in contrast to (1), the model without the control variables. This suggests that our instrumental variables strategy has a weak first stage, and our IV point estimate could be unreliable. This unreliability in our IV point estimate might be validated for a skeptic when computing $\widehat{\beta_{IV}}$ as a ratio between the controlled first-stage point estimate and the controlled reduced-form point estimate:
+    From the (2) first-stage regression of average years of education on the logarithm of distance to the US border alongside the additional control variables, the coefficent on $log(dist\_us\_km_i)$ is no longer statistically significant at either the 0.01, 0.05, or 0.1 levels in contrast to (1), the model without the control variables. This suggests that our instrumental variables strategy has a weak first stage, and our IV point estimate is unreliable. This unreliability in our IV point estimate might be validated for a skeptic when computing $\widehat{\beta_{IV}}$ as a ratio between the controlled first-stage point estimate and the controlled reduced-form point estimate:
 
     \[
         \frac{\widehat{\gamma_1}}{\widehat{\alpha_1}} = \frac{-0.091}{-0.034} = 2.676
     \]
         \\
-    This is a relatively huge IV value and might be a symptom of having a weak instrument (it suggests that, conditioning for the other control variables, a one percent change in the distance to the US border corresponds to a 267.6\% change in local average monthly household incomes). \\
+    This is a relatively huge IV value and might be a symptom of having a weak instrument (it suggests that, conditioning for the other control variables, a one percent change in the distance to the US border corresponds to a 267.6\% change in local average monthly household incomes). Economic theory and real world experience point to this conclusion not being reliable.\\
+    
+    Even for regression (1) the instrument effect on education is quite miniscule (from part E), the point estimate relates a one percent change in the distance to the US border with a 0.004 unit decrease in the average years of education) and now with the controls in place it doesn't have a statistically significant effect at all.\\
 
     It's possible that our instrument also does not pass the instrument exclusion restriction. While the effect of the logarithm of distance to the US border might not be statistically significant, its effect on the logarithm of local average monthly household incomes is. In this case, our instrument does not have an affect on the dependent variable only through our endogenous explanatory variable but rather through other ways.
     
@@ -755,7 +759,7 @@
             \end{tikzcd} 
         \] 
     \\
-    For a potential instrumental variable to be a valid candidate, the effect it has on the dependent variable must only act through the explanatory one (through `a' and then `b' in the diagram above). If it impacts $Y$ through `c' for instance, it is not valid, and from our regression table above, this seems to be the case considering the point estimate is non-zero and statistically significant at the 0.01 level. However, we would need to include more instruments for the average years of education in our first-stage regression to perform an over-identification test to see if one of the instruments is exogenous and therefore invalid.
+    For a potential instrumental variable to be a valid candidate, the effect it has on the dependent variable must only act through the explanatory one (through `a' and then `b' in the diagram above). If it impacts $Y$ through `c' for instance, it is not valid as the explanatory variable is no longer exogenous. In regression (4) we can see how, in contrast to (2), the point estimate for the causal effect of $ln(dist\_us\_km)$ on $ln(inc\_m)$ is statistically significant at the 0.01 level. That is, our point estimate for $\gamma_1$ is statistically significant.
     
     %   doesnt pass instrument exclusion restriction, affects income through other ways but not through education (statistically insignificant result for (2))
 
